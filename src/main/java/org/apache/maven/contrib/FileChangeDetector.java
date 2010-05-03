@@ -105,8 +105,7 @@ public class FileChangeDetector extends Observable {
 			return differentFiles;
 		}
 
-		private void listFiles(File directory, Set<FileSnapshot> listedFiles,
-				Set<File> alreadyVisited) {
+		private void listFiles(File directory, Set<FileSnapshot> listedFiles, Set<File> alreadyVisited) {
 			File[] filesInDirectory = directory.listFiles();
 			for (File file : filesInDirectory) {
 				System.out.println("Exploring file" + file);

@@ -28,7 +28,6 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.logging.Log;
 
 /**
  * Starts up a daemon that runs tests once any change on their sources happens
@@ -84,23 +83,23 @@ public class AutotestMojo extends AbstractMojo implements Observer
     private String excludes;
     
     
-    private List<Notifier> notifiers;
-    
     private FileChangeDetector changeDetector;
+    
+    private TestInvoker testInvoker;
     
 
     private void initialize() {
-		initializeNotifiers();
+		initializeTestInvoker();
 		initializeChangeDetector();
 	}
 
 	
 
-	private void initializeNotifiers() {
+	private void initializeTestInvoker() {
 		String[] notifierClassNames= (notifierClasses!=null) ? notifierClasses.split(",") : new String[]{};
-		notifiers=new ArrayList<Notifier>();
+		List<Notifier> notifiers=new ArrayList<Notifier>();
 		//CoC
-		notifiers.add(new LogNotifier(getLog()));
+		notifiers.add(new Notifier.LogNotifier(getLog()));
 		for (String notifierClass: notifierClassNames){
 			try {
 				notifiers.add((Notifier)Class.forName(notifierClass.trim()).newInstance());
@@ -108,6 +107,7 @@ public class AutotestMojo extends AbstractMojo implements Observer
 				getLog().warn("could not load notifier class", t);
 			} 
 		}
+		this.testInvoker=new TestInvoker(notifiers);
 	}
 	
 	private void initializeChangeDetector() {
@@ -160,35 +160,10 @@ public class AutotestMojo extends AbstractMojo implements Observer
 		HashMap<String,Object> args= (HashMap)uncastedArgs;
 		Set<File> changedFiles=(Set)args.get("files");
 		for (File file: changedFiles){
-			test(file);
-		}
-		
+			testInvoker.test(file);
+		}	
 	}
 	
-	private void test(File file) {
-		//TODO 
-		for (Notifier notifier:notifiers){
-			notifier.putSuccess(file.getName()+" has changed");
-		}
-		
-	}
 
-	static class LogNotifier implements Notifier{
-
-		Log log;
-		
-		protected LogNotifier(Log log){
-			this.log=log;
-		}
-		
-		public void putError(String message) {
-			log.error(message);
-			
-		}
-
-		public void putSuccess(String message) {
-			log.info(message);
-			
-		}
-	}
+	
 }
