@@ -46,7 +46,8 @@ public final class TestInvoker {
 	public void test(File file) {
 		Properties props = new Properties();
 		request.setProperties(props);
-		props.setProperty("test", getSimpleNameFor(file));//.replace(observableDirectory.getPath(), ""));
+		//Must fix: see TODO.markdown Fix#1
+		props.setProperty("test", getNormalizedFileName(file));
 		
 		InvocationResult result;
 		try {
@@ -68,7 +69,8 @@ public final class TestInvoker {
 		outputHandler.clear();
 	}
 
-	private String getSimpleNameFor(File f) {
+	//Must fix: see TODO.markdown Fix#1
+	private String getNormalizedFileName(File f) {
 		String path=f.getPath();
 		return path.substring(path.lastIndexOf("/")+1,path.length());
 	}

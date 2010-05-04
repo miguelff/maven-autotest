@@ -1,4 +1,4 @@
-This is a maven-autotest a ZenTest-like maven plugin for continous testing.
+This is a maven-autotest: a ZenTest-like maven plugin for continous testing.
 
 It uses surefire-test plugin to continuously test compilation units when a change on any of them is detected.  
 
@@ -23,6 +23,6 @@ For instance, if com.MyNotifier and com.JToastNotifier where Notifier subclasses
 	
 	$mvn autotest:run -Dnotifiers=com.MyNotifier, com.JToastNotifier
 	
-You can also override the default (2 seconds) lookup frequency, and set it for instance at a 10-second interval:
+You can also override the default (2 seconds) change lookup frequency, and set it for instance at a 10-second interval:
 
 	$mvn autotest:run -Dlookup.frequency=10
