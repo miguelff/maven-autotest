@@ -108,7 +108,6 @@ public class FileChangeDetector extends Observable {
 		private void listFiles(File directory, Set<FileSnapshot> listedFiles, Set<File> alreadyVisited) {
 			File[] filesInDirectory = directory.listFiles();
 			for (File file : filesInDirectory) {
-				System.out.println("Exploring file" + file);
 				if (file.isDirectory() && file.canRead()
 						&& !alreadyVisited.contains(file)) {
 					alreadyVisited.add(file);
