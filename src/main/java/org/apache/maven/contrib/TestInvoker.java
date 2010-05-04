@@ -46,9 +46,7 @@ public final class TestInvoker {
 	public void test(File file) {
 		Properties props = new Properties();
 		request.setProperties(props);
-		System.out.println("PATH "+getSimpleNameFor(file));
 		props.setProperty("test", getSimpleNameFor(file));//.replace(observableDirectory.getPath(), ""));
-		System.out.println(props);
 		
 		InvocationResult result;
 		try {

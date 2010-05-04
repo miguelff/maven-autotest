@@ -9,7 +9,6 @@
 	<description>A ruby's Zen-Test-like continuous testing maven plugin</description>
 	<url>http://github.com/miguelff/maven-autotest</url>
 
-
 	<build>
 		<plugins>
 			<plugin>
@@ -40,7 +39,7 @@
 		<dependency>
 			<groupId>org.apache.maven.shared</groupId>
 			<artifactId>maven-invoker</artifactId>
-			<version>2.0.11</version>
+			<version>2.0.10</version>
 		</dependency>
 
 		<dependency>
